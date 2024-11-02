@@ -1,7 +1,7 @@
-import { ValidationError } from "express-validator";
+import { FieldValidationError } from "express-validator";
 
 export class RequestValidationError extends Error {
-  constructor(public errors: ValidationError[]){
+  constructor(public errors: FieldValidationError[]){
     super();
 
     // Only becuase we're extending built in class
@@ -10,7 +10,7 @@ export class RequestValidationError extends Error {
 
   serializeErrors() {
     return this.errors.map(err => {
-      return { message: err.msg }
+      return { message: err.msg, field: err.path }
     });
   }
 }
